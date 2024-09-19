@@ -3,7 +3,7 @@ import Order from "../models/order-models.js";
 
 export const PostorderBy = async (req, res) => {
     try {
-        const { user_id,  order_date, status,total_amount,discount_id } = req.body;
+        const { user_id, order_date, status,total_amount,discount_id } = req.body;
 
       const newOrder = new Order({
         user_id, 

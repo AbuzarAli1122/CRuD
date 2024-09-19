@@ -2,13 +2,11 @@ import OrderItem from "../models/orderItem-model.js"
 
 export const PostorderItem = async (req, res) => {
     try {
-        const { 
-             order_id, product_Id,orderItem_id, quantity,price } = req.body;
+        const { order_id, product_Id, quantity,price } = req.body;
 
-      const newOrderItem = new Order({
+      const newOrderItem = new OrderItem({
         order_id, 
-        product_Id,
-        orderItem_id, 
+        product_Id, 
         quantity,
         price
       });
