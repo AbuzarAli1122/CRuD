@@ -1,7 +1,6 @@
 import express  from "express";
 import {
     Postpayment,
-    getPaymentByOrderId,
     updatepayment,
     deletepayment,
     getPaymentData
@@ -15,7 +14,6 @@ paymentRoute.post("/createpayment", Postpayment),
 paymentRoute.get( "/getpayment", getPaymentData),
 
 
-paymentRoute.get("/getpayment/:id",getPaymentByOrderId),
 paymentRoute.delete("/deletepayment/:id",deletepayment)
 paymentRoute.put("/updatepayment/:id",updatepayment)
 
