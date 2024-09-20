@@ -4,12 +4,17 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors'
 import { connectDB } from './config/db.js';
+
+//--------------------- all routes ---------------------------------
 import  userRoutes  from './routes/userRoutes.js';
 import productRoute from './routes/productRoutes.js';
 import reviewRoute from './routes/reviewRoutes.js';
 import orderRoute from './routes/orderRoutes.js';
 import paymentRoute from './routes/paymentRoutes.js';
+import orderitemRoute from './routes/orderitemRoutes.js';
 
+
+//--------------------- end here ----------------------------------
 
 dotenv.config()
 const app = express();
@@ -27,7 +32,9 @@ app.use("/", reviewRoute);
 app.use("/", orderRoute);
 app.use("/", paymentRoute);
 
-// app.use("/", Route);
+app.use("/", orderitemRoute);
+
+
 
 
 

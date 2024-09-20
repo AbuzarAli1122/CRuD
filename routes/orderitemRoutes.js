@@ -12,12 +12,12 @@ import {
 const orderitemRoute= express.Router();
 
 orderitemRoute.post("/createOrderitem", PostorderItem),
-orderitemRoute.get( "/getOrder", getOrderitemById),
+orderitemRoute.get( "/getOrderitem", getOrderitemById),
 
 orderitemRoute.get("/getorderitem/:id",getOrderItemByuserId),
 orderitemRoute.delete("/deleteOrder/:id",deleteOrder)
 orderitemRoute.put("/updateOrder/:id",updateOrder)
 
 
-export default orderRoute;
+export default orderitemRoute;
 
