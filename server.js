@@ -26,15 +26,17 @@ app.use(express.json())
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 
+
+//--------------------- all routes ---------------------------------
+
 app.use("/",userRoutes)
 app.use("/",productRoute)
 app.use("/", reviewRoute);
 app.use("/", orderRoute);
 app.use("/", paymentRoute);
-
 app.use("/", orderitemRoute);
 
-
+//--------------------- end here ----------------------------------
 
 
 
