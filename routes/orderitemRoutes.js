@@ -1,10 +1,12 @@
 import express  from "express";
 import {
     PostorderItem,
-    getOrderItemByuserId,
-    deleteOrder,
-    updateOrder,
-    getOrderitemById
+    getorderItemData,
+
+    getOrderItemByOrderId,
+    deleteOrderitem,
+    updateOrderItem,
+    
     
      
  } from "../controllers/orderitem.js"
@@ -12,11 +14,11 @@ import {
 const orderitemRoute= express.Router();
 
 orderitemRoute.post("/createOrderitem", PostorderItem),
-orderitemRoute.get( "/getOrderitem", getOrderitemById),
+orderitemRoute.get( "/getOrderitem", getorderItemData),
 
-orderitemRoute.get("/getorderitem/:id",getOrderItemByuserId),
-orderitemRoute.delete("/deleteOrder/:id",deleteOrder)
-orderitemRoute.put("/updateOrder/:id",updateOrder)
+orderitemRoute.get("/getorderitem/:id",getOrderItemByOrderId),
+orderitemRoute.delete("/deleteOrder/:id",deleteOrderitem)
+orderitemRoute.put("/updateOrderitem/:id",updateOrderItem)
 
 
 export default orderitemRoute;
