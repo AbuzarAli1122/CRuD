@@ -12,6 +12,7 @@ import reviewRoute from './routes/reviewRoutes.js';
 import orderRoute from './routes/orderRoutes.js';
 import paymentRoute from './routes/paymentRoutes.js';
 import orderitemRoute from './routes/orderitemRoutes.js';
+// import loginrouter from "./routes/loginRoutes.js";
 
 
 //--------------------- end here ----------------------------------
@@ -35,6 +36,8 @@ app.use("/", reviewRoute);
 app.use("/", orderRoute);
 app.use("/", paymentRoute);
 app.use("/", orderitemRoute);
+
+// app.use("/", loginrouter)
 
 //--------------------- end here ----------------------------------
 
