@@ -15,7 +15,7 @@ import paymentRoute from './routes/paymentRoutes.js';
 import orderitemRoute from './routes/orderitemRoutes.js';
 import CategoryRoute from './routes/categoryRoutes.js';
 import Cartrouter from './routes/CartRoutes.js';
-import Discountrouter from './routes/DiscountRoutes.js';
+import Discountrouter from "./routes/DiscountRoutes.js";
 import Shippingrouter from './routes/ShippingDetailRoute.js';
 
 
