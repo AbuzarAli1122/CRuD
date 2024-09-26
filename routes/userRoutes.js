@@ -18,7 +18,9 @@ userRoute.post("/logout",logoutUser)
 
 // Route to reset password using the token
 userRoute.post('/forgot-password', sendPasswordResetEmail);
-userRoute.post('/reset-password/:token', resetPassword);
+userRoute.post('/reset-password/:token',authorizeRoles('admin'), resetPassword);
+
+
 
 
 export default userRoute;

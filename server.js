@@ -1,5 +1,4 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors'
@@ -17,6 +16,7 @@ import orderitemRoute from './routes/orderitemRoutes.js';
 import CategoryRoute from './routes/categoryRoutes.js';
 import Cartrouter from './routes/CartRoutes.js';
 import Discountrouter from './routes/DiscountRoutes.js';
+import Shippingrouter from './routes/ShippingDetailRoute.js';
 
 
 //--------------------- end here ----------------------------------
@@ -50,7 +50,8 @@ app.use("/", orderitemRoute);
 app.use("/", CategoryRoute);
 
 app.use("/", Cartrouter);
-app.use("/", Discountrouter)
+app.use("/", Discountrouter);
+app.use("/", Shippingrouter)
 
 // app.use("/", loginrouter)
 

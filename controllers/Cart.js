@@ -5,12 +5,10 @@ export const addToCart = async (req, res) => {
   try {
       const { userId, items } = req.body;
 
-      // Ensure the items array is not empty
       if (!items || !Array.isArray(items) || items.length === 0) {
           return res.status(400).json({ message: "Items are required in the cart." });
       }
 
-      // Ensure each item has price and quantity
       const processedItems = items.map(item => {
           if (!item.price || isNaN(item.price)) {
               throw new Error("Item price is required and must be a valid number.");
@@ -24,17 +22,14 @@ export const addToCart = async (req, res) => {
           };
       });
 
-      // Calculate total cart price
       const totalPrice = processedItems.reduce((sum, item) => sum + item.total, 0);
 
-      // Create the cart object
       const newCart = new Cart({
           userId,
           items: processedItems,
           totalPrice
       });
 
-      // Save the cart to the database
       await newCart.save();
       res.status(200).json({ success: true, message: "Items added to cart", cart: newCart });
 
@@ -71,7 +66,6 @@ export const updateCart = async (req, res) => {
         const { userId } = req.params;
         const { items } = req.body;
   
-        // Debugging: Check userId and incoming items
         console.log("User ID:", userId);
         console.log("Items to update:", items);
   
@@ -80,12 +74,10 @@ export const updateCart = async (req, res) => {
             return res.status(404).json({ message: "Cart not found" });
         }
   
-        // Debugging: Check if the cart is found
         console.log("Existing cart:", cart);
   
-        // Update items in the cart
         items.forEach(updatedItem => {
-            console.log("Updated Item:", updatedItem);  // Log the values for debugging
+            console.log("Updated Item:", updatedItem); 
             const itemIndex = cart.items.findIndex(item => item.productId == updatedItem.productId);
             if (itemIndex >= 0) {
                 if (updatedItem.quantity === 0) {
@@ -97,10 +89,8 @@ export const updateCart = async (req, res) => {
             }
         });
   
-        // Recalculate total price
         cart.totalPrice = cart.items.reduce((sum, item) => sum + item.total, 0);
   
-        // Save updated cart
         await cart.save();
         res.status(200).json({ success: true, message: "Cart updated", cart });
     } catch (error) {
@@ -140,7 +130,6 @@ export const clearCart = async (req, res) => {
        return res.status(404).json({ message: 'Cart not found' });
     }
 
-    // Clear all items
     cart.items = [];
     cart.totalPrice = 0;
 
