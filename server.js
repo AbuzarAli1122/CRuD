@@ -16,6 +16,7 @@ import paymentRoute from './routes/paymentRoutes.js';
 import orderitemRoute from './routes/orderitemRoutes.js';
 import CategoryRoute from './routes/categoryRoutes.js';
 import Cartrouter from './routes/CartRoutes.js';
+import Discountrouter from './routes/DiscountRoutes.js';
 
 
 //--------------------- end here ----------------------------------
@@ -48,7 +49,8 @@ app.use("/", paymentRoute);
 app.use("/", orderitemRoute);
 app.use("/", CategoryRoute);
 
-app.use("/", Cartrouter)
+app.use("/", Cartrouter);
+app.use("/", Discountrouter)
 
 // app.use("/", loginrouter)
 

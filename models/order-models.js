@@ -28,7 +28,7 @@ const orderSchema = new mongoose.Schema({
      },
     discount_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
+        ref: 'Discount',
        
        },
 }, {

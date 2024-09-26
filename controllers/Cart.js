@@ -65,41 +65,48 @@ export const getCart = async (req, res) => {
 
 //-----------------update the Cart --------------------------------
 
+
 export const updateCart = async (req, res) => {
-  try {
-      const { userId } = req.params;
-      const { items } = req.body;
-
-      const cart = await Cart.findOne({ userId });
-      if (!cart) {
-          return res.status(404).json({ message: "Cart not found" });
-      }
-
-      // Update items in the cart
-      items.forEach(updatedItem => {
-          const itemIndex = cart.items.findIndex(item => item.productId == updatedItem.productId);
-          if (itemIndex >= 0) {
-              if (updatedItem.quantity === 0) {
-                  // Remove item if quantity is 0
-                  cart.items.splice(itemIndex, 1);
-              } else {
-                  // Update quantity and total
-                  cart.items[itemIndex].quantity = updatedItem.quantity;
-                  cart.items[itemIndex].total = updatedItem.price * updatedItem.quantity;
-              }
-          }
-      });
-
-      // Recalculate total price
-      cart.totalPrice = cart.items.reduce((sum, item) => sum + item.total, 0);
-
-      // Save updated cart
-      await cart.save();
-      res.status(200).json({ success: true, message: "Cart updated", cart });
-  } catch (error) {
-      res.status(500).json({ message: error.message });
-  }
-};
+    try {
+        const { userId } = req.params;
+        const { items } = req.body;
+  
+        // Debugging: Check userId and incoming items
+        console.log("User ID:", userId);
+        console.log("Items to update:", items);
+  
+        const cart = await Cart.findOne({ userId });
+        if (!cart) {
+            return res.status(404).json({ message: "Cart not found" });
+        }
+  
+        // Debugging: Check if the cart is found
+        console.log("Existing cart:", cart);
+  
+        // Update items in the cart
+        items.forEach(updatedItem => {
+            console.log("Updated Item:", updatedItem);  // Log the values for debugging
+            const itemIndex = cart.items.findIndex(item => item.productId == updatedItem.productId);
+            if (itemIndex >= 0) {
+                if (updatedItem.quantity === 0) {
+                    cart.items.splice(itemIndex, 1);
+                } else {
+                    cart.items[itemIndex].quantity = updatedItem.quantity;
+                    cart.items[itemIndex].total = Number(updatedItem.price) * Number(updatedItem.quantity);
+                }
+            }
+        });
+  
+        // Recalculate total price
+        cart.totalPrice = cart.items.reduce((sum, item) => sum + item.total, 0);
+  
+        // Save updated cart
+        await cart.save();
+        res.status(200).json({ success: true, message: "Cart updated", cart });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+  };
 
 
 
