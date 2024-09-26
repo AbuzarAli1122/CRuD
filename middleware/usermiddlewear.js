@@ -2,49 +2,58 @@ import jwt from "jsonwebtoken";
 
 export const authenticateWithToken=(req,res,next)=>{
     try {
-         req.headers.authorization &&
-        req.headers.authorization.startsWith("Bearer")
-        let token = req.headers.authorization.split(" ")[1];
-
-        if(!token){
-            return res.status(401).json({message:"Access Denied , token missing"})
+        const authHeader = req.headers.authorization;
+        
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return res.status(401).json({ message: "Access Denied, token missing" });
         }
-    
-        jwt.verify(token,process.env.PRIVATE_KEY,(err, user)=>{
-            if(err){
-                return res.status(403).json({message:"You are not authorized"})
+        
+        const token = authHeader.split(" ")[1];
+        
+        jwt.verify(token, process.env.PRIVATE_KEY, (err, user) => {
+            if (err && err.name === "TokenExpiredError") {
+                return res.status(401).json({ message: "Token has expired, please log in again" });
             }
-            req.user=user;
-            next()
-        }  ) 
+            if (err) {
+                return res.status(403).json({ message: "You are not authorized" });
+            }
+            req.user = user;
+            next();
+        });
     } catch (error) {
-        res.status(500).json("Internal server Error")
+        res.status(500).json({ message: "Internal server error" });
+        
     }
 }
 
 
 export const authorizeRoles=(roles)=> {
     return (req, res, next) => {
-        const token = req.header('Authorization');
+        // const token = req.header('Authorization');
 
-        console.log(req.headers.authorization);
+        // console.log(req.headers.authorization);
 
-        if (!token) {
-            return res.status(401).json({ message: 'Access denied, token missing' });
-        }
+        // if (!token) {
+        //     return res.status(401).json({ message: 'Access denied, token missing' });
+        // }
 
-        jwt.verify(token, 'your-secret-key', (err, user) => {
-            if (err) {
-                return res.status(403).json({ message: 'Invalid token' });
-            }
+        // jwt.verify(token, 'your-secret-key', (err, user) => {
+        //     if (err) {
+        //         return res.status(403).json({ message: 'Invalid token' });
+        //     }
 
-            if (!roles.includes(user.role)) {
+            if (!roles.includes(req.user.role)) {
                 return res.status(403).json({ message: 'Unauthorized access' });
             }
 
-            req.user = user;
+            // req.user = user;
             next();
-        });
+        };
     };
-}
+// }
+
+
+// practice 
+
+
 

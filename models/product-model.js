@@ -17,10 +17,15 @@ const productSchema= new mongoose.Schema({
     
     },
     productPrice:{
-        type:String,
+        type:Number,
         required : true,
         
     },
+
+    image:[{
+        type:String,
+    }],
+
     user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"user",

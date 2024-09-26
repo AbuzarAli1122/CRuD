@@ -8,7 +8,14 @@ const CategorySchema = new mongoose.Schema({
         required:true,
         enum: ['Men', 'Women', 'Kids'],
         default: 'Men'
-    }
+    },
+    description: {
+        type: String,
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
     
 }, {
     timestamps: true, 

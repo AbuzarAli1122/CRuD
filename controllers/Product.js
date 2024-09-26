@@ -6,7 +6,14 @@ import product from "../models/product-model.js";
 export const postProductData= async(req,res)=>{
     try{
             const {productName, productTitle,productDescription,productPrice,user}= req.body;
-            console.log(productName, productTitle,productDescription,productPrice,user);
+            const image= req.files;
+            const imagePaths = image ? image.map(img => img.path) : [];
+             // Validate required fields
+        if (!productPrice || isNaN(productPrice)) {
+            return res.status(400).json({ message: "Product price is required and should be a valid number." });
+        }
+        const numericProductPrice = Number(productPrice);
+            console.log(productName, productTitle,productDescription,productPrice,user,image);
             
             const productExist=await product.findOne({productName:productName});
             if(productExist){
@@ -17,8 +24,9 @@ export const postProductData= async(req,res)=>{
                 productName,
                 productTitle,
                 productDescription,
-                productPrice,
-                user
+                productPrice: numericProductPrice,
+                user,
+                image:imagePaths
             })
             await productData.save();
             return res.status(200).json({ message: "data saved succesfully"})
@@ -61,7 +69,7 @@ export const getProductByUser= async(req,res)=>{
             const id = req.params.id;
             const getProductId = await product.findById(id);
             if(!getProductId){
-                return res.status(404).json({message:"User not found"});
+                return res.status(404).json({message:"Product not found"});
             }
             return res.status(200).json({success:true, getProductId});
     }
@@ -77,9 +85,9 @@ export const deleteById = async( req,res ) => {
         const id = req.params.id;
         const deleteProduct = await product.findByIdAndDelete(id);
         if(!deleteProduct){
-            return res.status(404).json({message:"User not found"});
+            return res.status(404).json({message:"product not found"});
             }
-            return res.status(200).json({success:true, message:"User deleted successfully"});
+            return res.status(200).json({success:true, message:"product deleted successfully"});
             }
             catch(err){
                 return res.status(500).json({message:err.message});

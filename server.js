@@ -4,6 +4,8 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors'
 import { connectDB } from './config/db.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 //--------------------- all routes ---------------------------------
 import  userRoutes  from './routes/userRoutes.js';
@@ -12,7 +14,8 @@ import reviewRoute from './routes/reviewRoutes.js';
 import orderRoute from './routes/orderRoutes.js';
 import paymentRoute from './routes/paymentRoutes.js';
 import orderitemRoute from './routes/orderitemRoutes.js';
-// import loginrouter from "./routes/loginRoutes.js";
+import CategoryRoute from './routes/categoryRoutes.js';
+import Cartrouter from './routes/CartRoutes.js';
 
 
 //--------------------- end here ----------------------------------
@@ -28,6 +31,13 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 
 
+//---------multer-----------------
+
+const __filename = fileURLToPath(import.meta.url);
+const _dirname = path.dirname(__filename);
+app.use('/upload', express.static(path.join(_dirname, 'upload')));
+
+
 //--------------------- all routes ---------------------------------
 
 app.use("/",userRoutes)
@@ -36,6 +46,9 @@ app.use("/", reviewRoute);
 app.use("/", orderRoute);
 app.use("/", paymentRoute);
 app.use("/", orderitemRoute);
+app.use("/", CategoryRoute);
+
+app.use("/", Cartrouter)
 
 // app.use("/", loginrouter)
 
